@@ -7,7 +7,7 @@ load_dotenv("Jarvis/.env")
 
 
 pc = PineconeClient(api_key=os.environ["PINECONE_API_KEY"])
-embeddings = embeddings =OpenAIEmbeddings(model='text-embedding-3-small',api_key=os.environ["OPENAI_API_KEY"])
+embeddings =OpenAIEmbeddings(model='text-embedding-3-small',api_key=os.environ["OPENAI_API_KEY"])
 
 
 
