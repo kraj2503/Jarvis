@@ -1,1 +1,12 @@
 google-adk
+langchain
+langgraph
+openAI
+langchain-community
+datasets
+# langchain-huggingface
+# sentence-transformers
+langchain_openai
+python-dotenv
+pinecone
+langchain_pinecone
