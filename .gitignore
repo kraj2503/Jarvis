@@ -1,2 +1,4 @@
 Jarvis/.env
 **/.env
+
+**/__pycache__
