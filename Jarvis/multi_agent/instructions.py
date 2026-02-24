@@ -25,13 +25,16 @@ Output style:
 
 
 
-
-switcher={
-    healthcare_agent_instructions:healthcare_agent
+switcher = {
+    "healthcare_agent": healthcare_agent_instructions
 }
 
-
 def get_instructions(agent_name):    
+    try:
+        
+        result = switcher.get(agent_name)()
+        return result
     
-    result = switcher.get(agent_name)()
-    return result
+    except KeyError:
+        print("Unknown Agent Name", agent_name)
+        
