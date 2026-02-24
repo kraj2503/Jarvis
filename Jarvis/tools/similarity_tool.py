@@ -20,3 +20,22 @@ def get_healthcare_similarity(query:str):
             for match in res["matches"]
         ]
     }
+
+def get_financial_similarity(query:str):
+    index = "financial"
+    res = get_similarity(query,index);
+    
+    return {
+        "matches": [
+            {
+                "id": match["id"],
+                "score": float(match["score"]), 
+                "text": match["metadata"].get("text", ""),
+                "metadata": {
+                    k: v for k, v in match["metadata"].items()
+                    if isinstance(v, (str, int, float, bool))
+                }
+            }
+            for match in res["matches"]
+        ]
+    }

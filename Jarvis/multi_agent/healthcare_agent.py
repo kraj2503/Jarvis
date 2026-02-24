@@ -1,6 +1,6 @@
 from google.adk.agents  import Agent, SequentialAgent ,ParallelAgent, LlmAgent
 from google.adk.tools import google_search, FunctionTool
-from Jarvis.tools.healthcare_tool import get_healthcare_similarity
+from Jarvis.tools.similarity_tool import get_healthcare_similarity
 from Jarvis.multi_agent.instructions import get_instructions
 from google.adk.models import Gemini
 

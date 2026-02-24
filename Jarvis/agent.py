@@ -1,6 +1,7 @@
 from google.adk.agents.llm_agent import Agent
 from google.adk.models import Gemini
 from Jarvis.multi_agent.healthcare_agent import healthcare_agent
+from Jarvis.multi_agent.financial_agent import financial_agent
 
 root_agent = Agent(
     name='root_agent',
@@ -11,7 +12,7 @@ root_agent = Agent(
     # static_instruction=[],
     # before_model_callback=[],
     # after_model_callback=[],
-    sub_agents=[healthcare_agent],
+    sub_agents=[healthcare_agent,financial_agent],
     # tools =[]    
 
 )
