@@ -1,18 +1,44 @@
-from google.adk.agents.llm_agent import Agent
+from google.adk.agents.llm_agent import LlmAgent
 from google.adk.models import Gemini
 from Jarvis.multi_agent.healthcare_agent import healthcare_agent
 from Jarvis.multi_agent.financial_agent import financial_agent
+from google.adk.sessions import database_session_service
+from google.adk.sessions import InMemorySessionService
+from Jarvis.tools.memory_tool import read_memory, write_memory
+from Jarvis.instructions import get_instructions
 
-root_agent = Agent(
+
+
+# from google.adk.runners import Runner
+
+
+APP_NAME = "Jarvis"
+USER_ID = "mem_user"
+MODEL = "gemini-3-flash-preview" 
+
+
+
+# InMemorySessionService stores conversations in RAM (temporary)
+session_service = InMemorySessionService()    
+
+
+
+
+
+root_agent = LlmAgent(
     name='root_agent',
     model=Gemini(model="models/gemini-3-flash-preview"),
 
     description='A helpful assistant for user questions.',
-    instruction='You are a multi Agent system, your task is to plan and deligate task to further agents and reply back with ansewer',
+    instruction=get_instructions("root_agent"),
     # static_instruction=[],
-    # before_model_callback=[],
-    # after_model_callback=[],
+    # before_model_callback=[write_memory],
+    # after_model_callback=[read_memory],
     sub_agents=[healthcare_agent,financial_agent],
-    # tools =[]    
+    #session_service=session_service,
+    tools =[read_memory,
+            write_memory
+            
+            ]    
 
 )

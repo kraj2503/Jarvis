@@ -1,8 +1,9 @@
 from google.adk.agents  import Agent, SequentialAgent ,ParallelAgent, LlmAgent
 from google.adk.tools import google_search, FunctionTool
 from Jarvis.tools.similarity_tool import get_healthcare_similarity
-from Jarvis.multi_agent.instructions import get_instructions
+from Jarvis.instructions import get_instructions
 from google.adk.models import Gemini
+from Jarvis.tools.memory_tool import read_memory, write_memory
 
 
 
@@ -29,7 +30,7 @@ healthcare_rag = LlmAgent(
 healthcare_aggregator = LlmAgent(
     name="healthcare_aggregator",
     model=Gemini(model="models/gemini-3-flash-preview"),
-    
+    tools=[read_memory,write_memory],
     static_instruction=get_instructions("healthcare_aggregator"),
     
 )
@@ -44,10 +45,7 @@ healthcare_agent_parallel = ParallelAgent(
 
 healthcare_agent = SequentialAgent(
     name="healthcare_agent",
-    
+
     sub_agents=[healthcare_agent_parallel, healthcare_aggregator],
 )
 
-
-
-# print(get_similarity_healthcare("Cure of diabetis"))
