@@ -11,9 +11,9 @@ from google.genai import types
 from google.adk.agents.remote_a2a_agent import RemoteA2aAgent
 from google.adk.runners import Runner
 from google.adk.agents.remote_a2a_agent import AGENT_CARD_WELL_KNOWN_PATH
-# from google.adk.runners import Runner
+from google.genai.types import Content, Part
 import httpx
-
+import asyncio
 
 APP_NAME = "Jarvis"
 # USER_ID = "mem_user"
@@ -62,3 +62,36 @@ root_agent = LlmAgent(
 )
 
 runner = Runner(app_name="Jarvis", agent=root_agent,session_service=session_service)
+
+
+async def main(user_id:str,session_id:str,query:str):
+    
+    session = await session_service.get_session(
+        app_name=APP_NAME, user_id=user_id, session_id=session_id
+    )
+    if session is None:
+        session = await session_service.create_session(
+            app_name=APP_NAME, user_id=user_id, session_id=session_id
+        )
+
+    user_content = Content(
+        role="user", parts=[Part(text=query)]
+    )
+
+    
+    final_response = ""
+    async for event in runner.run_async(
+        user_id=user_id,
+        session_id=session_id,
+        new_message=user_content
+        
+        ):
+        if event.is_final_response() and event.content and event.content.parts:
+            final_response= event.content.parts[0].text
+    
+    return final_response;
+
+
+if __name__ =="__main__":
+    asyncio.run(main("userId","session_id","tell me about a2a in adk"))
+         
