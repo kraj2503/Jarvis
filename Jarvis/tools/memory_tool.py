@@ -2,7 +2,7 @@
 from Jarvis.memory.memory import read_long_term_vector_memory, write_long_term_vector_memory
 
 
-def read_memory(user_id,query,top_k):
+def read_memory(user_id,query,top_k=10):
     """
     Tool to call read memory function
     """

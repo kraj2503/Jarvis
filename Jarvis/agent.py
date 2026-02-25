@@ -7,7 +7,8 @@ from google.adk.sessions import InMemorySessionService
 from Jarvis.tools.memory_tool import read_memory, write_memory
 from Jarvis.instructions import get_instructions
 
-
+# from google.adk.agents.remote_a2a_agent import PREV_AGENT_CARD_WELL_KNOWN_PATH,
+from google.adk.agents.remote_a2a_agent import RemoteA2aAgent
 
 # from google.adk.runners import Runner
 
@@ -23,18 +24,26 @@ session_service = InMemorySessionService()
 
 
 
+home_automation_remote_agent = RemoteA2aAgent(
+    name="Home_automation_agent",
+    description="Agent handles all the home automation tasks for the user",
+    agent_card=(
+        f"http://localhost:8001/.well-known/agent-card.json"
+    ),
+)
+
 
 
 root_agent = LlmAgent(
     name='root_agent',
-    model=Gemini(model="models/gemini-3-flash-preview"),
+    model=Gemini(model="models/gemini-3-pro-preview"),
 
     description='A helpful assistant for user questions.',
     instruction=get_instructions("root_agent"),
     # static_instruction=[],
     # before_model_callback=[write_memory],
     # after_model_callback=[read_memory],
-    sub_agents=[healthcare_agent,financial_agent],
+    sub_agents=[healthcare_agent,financial_agent,home_automation_remote_agent],
     #session_service=session_service,
     tools =[read_memory,
             write_memory

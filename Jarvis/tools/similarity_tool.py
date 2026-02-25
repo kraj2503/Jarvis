@@ -4,7 +4,7 @@ from Jarvis.tools.RAG_tools.get_similarity import get_similarity
 
 def get_healthcare_similarity(query:str):
     index = "healthcare"
-    res = get_similarity(query,index);
+    res = get_similarity(query,index,10);
     
     return {
         "matches": [
@@ -23,7 +23,7 @@ def get_healthcare_similarity(query:str):
 
 def get_financial_similarity(query:str):
     index = "financial"
-    res = get_similarity(query,index);
+    res = get_similarity(query,index,10);
     
     return {
         "matches": [
