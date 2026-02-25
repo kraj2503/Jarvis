@@ -10,3 +10,5 @@ langchain_openai
 python-dotenv
 pinecone
 langchain_pinecone
+a2a-sdk
+a2a
