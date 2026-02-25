@@ -1,5 +1,5 @@
 
-from Jarvis.tools.RAG_tools.get_similarity import get_similarity
+from  tools.RAG_tools.get_similarity import get_similarity
 
 
 def get_healthcare_similarity(query:str):
