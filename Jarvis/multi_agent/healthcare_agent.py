@@ -1,9 +1,9 @@
 from google.adk.agents  import Agent, SequentialAgent ,ParallelAgent, LlmAgent
 from google.adk.tools import google_search, FunctionTool
-from  tools.similarity_tool import get_healthcare_similarity
-from  instructions import get_instructions
+from  Jarvis.tools.similarity_tool import get_healthcare_similarity
+from  Jarvis.instructions import get_instructions
 from google.adk.models import Gemini
-from  tools.memory_tool import read_memory, write_memory
+from  Jarvis.tools.memory_tool import read_memory, write_memory
 
 
 
