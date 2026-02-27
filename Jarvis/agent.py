@@ -1,18 +1,16 @@
 from google.adk.agents.llm_agent import LlmAgent
 from google.adk.models import Gemini
-from multi_agent.healthcare_agent import healthcare_agent
-from multi_agent.financial_agent import financial_agent
+from jarvis.multi_agent.healthcare_agent import healthcare_agent
+from jarvis.tools.memory_tool import read_memory, write_memory
+from jarvis.instructions import get_instructions
+from jarvis.multi_agent.financial_agent import financial_agent
 from google.adk.sessions import database_session_service
 from google.adk.sessions import InMemorySessionService
-from tools.memory_tool import read_memory, write_memory
-from instructions import get_instructions
 from google.genai import types
-# from google.adk.agents.remote_a2a_agent import PREV_AGENT_CARD_WELL_KNOWN_PATH,
 from google.adk.agents.remote_a2a_agent import RemoteA2aAgent
 from google.adk.runners import Runner
 from google.adk.agents.remote_a2a_agent import AGENT_CARD_WELL_KNOWN_PATH
 from google.genai.types import Content, Part
-import httpx
 import asyncio
 
 APP_NAME = "Jarvis"
@@ -65,7 +63,7 @@ runner = Runner(app_name="Jarvis", agent=root_agent,session_service=session_serv
 
 
 async def main(user_id:str,session_id:str,query:str):
-    
+    print("running main",user_id,session_id,query)
     session = await session_service.get_session(
         app_name=APP_NAME, user_id=user_id, session_id=session_id
     )
@@ -78,7 +76,7 @@ async def main(user_id:str,session_id:str,query:str):
         role="user", parts=[Part(text=query)]
     )
 
-    
+    print("calling LLM")
     final_response = ""
     async for event in runner.run_async(
         user_id=user_id,
@@ -86,10 +84,18 @@ async def main(user_id:str,session_id:str,query:str):
         new_message=user_content
         
         ):
+        print(event)
         if event.is_final_response() and event.content and event.content.parts:
             final_response= event.content.parts[0].text
     
     return final_response;
+
+
+async def invoke_root_model(user_id:str,session_id:str,query:str):
+    
+    res = await main(user_id,session_id,query)
+    
+    return res; 
 
 
 if __name__ =="__main__":

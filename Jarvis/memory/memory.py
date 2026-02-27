@@ -1,7 +1,7 @@
 import uuid
 import time
-from  memory.create_index import create_index
-from  embedding.create_embedding import create_embeddings  
+from  jarvis.memory.create_index import create_index
+from  jarvis.embedding.create_embedding import create_embeddings  
 
 index = create_index("memory")
 

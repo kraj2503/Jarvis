@@ -1,7 +1,7 @@
 from google.adk.agents  import Agent, SequentialAgent ,ParallelAgent, LlmAgent
 from google.adk.tools import google_search, FunctionTool
-from  tools.similarity_tool import get_financial_similarity
-from  instructions import get_instructions
+from  jarvis.tools.similarity_tool import get_financial_similarity
+from  jarvis.instructions import get_instructions
 from google.adk.models import Gemini
 
 

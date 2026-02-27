@@ -19,7 +19,7 @@ def chunk_data(text:str,chunk_Size=800,chunk_overlap=100):
 
 def create_embeddings(content:str)->  list[list[float]]:
 
-    if len(content)>500:
+    if len(content)>200:
         content = chunk_data(content)
         
     vectors = embeddings.embed_documents(content)
